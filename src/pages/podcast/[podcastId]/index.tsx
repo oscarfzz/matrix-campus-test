@@ -1,24 +1,33 @@
-import { BaseLayout } from "@src/layout";
+import { Link as MuiLink } from "@mui/material";
+import {
+  CardLarge,
+  CardMedium,
+  Container,
+  TitleSection,
+} from "@src/components";
+import { BaseLayout, PodcastLayout } from "@src/layout";
 import { ITunesServices } from "@src/services";
-import { QUERYKEYS } from "@src/utils";
+import { getHoursFromMilliseconds, getLocaleDate, QUERYKEYS } from "@src/utils";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
 import { GetServerSidePropsContext } from "next";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { useSnackbar } from "notistack";
 
 export const Postcast = () => {
   const router = useRouter();
   const { podcastId } = router.query;
   const service = new ITunesServices();
-  const { enqueueSnackbar } = useSnackbar();
 
-  const { data: podcast, isLoading: isLoadingPodcast } = useQuery([QUERYKEYS.PODCAST], () =>
-    service.getPodcastById(`${podcastId}`), {
+  const { data: podcast } = useQuery(
+    [QUERYKEYS.PODCAST],
+    () => service.getPodcastById(`${podcastId}`),
+    {
       refetchOnWindowFocus: false,
     }
   );
 
-  const { data: episodes = [], isLoading: isLoadingEpisodes } = useQuery(
+  const { data: episodes = [] } = useQuery(
     [QUERYKEYS.EPISODES, podcastId],
     () => service.getEpisodesByPodcastId(`${podcastId}`),
     {
@@ -27,43 +36,50 @@ export const Postcast = () => {
     }
   );
 
-  const redirectToEpisode = (id: string | undefined) => {
-    if (!id) {
-      enqueueSnackbar("No episode found", {
-        variant: "error",
-        anchorOrigin: {
-          vertical: "top",
-          horizontal: "center",
-        },
-      });
-      return;
-    };
-      router.push(`/podcast/${podcastId}/episode/${id}`)
-  }
-
   return (
     <BaseLayout>
-      {podcast && (
-        <div>
-          <h3>{podcast.collectionName}</h3>
-          <h3>{podcast.artistName}</h3>
-          <h3>{podcast.releaseDate}</h3>
-          <h4>{podcast.primaryGenreName}</h4>
-        </div>
-      )}
+      <Container>
+        <PodcastLayout
+          information={
+            podcast && (
+              <CardLarge
+                title={podcast.collectionName}
+                subtitle={podcast.artistName}
+                image={podcast.artworkUrl600}
+                description={dayjs(podcast.releaseDate).format("DD MMMM YYYY")}
+              />
+            )
+          }
+        >
+          <br />
+          <TitleSection variant="h3">TOTAL EPISODES: {episodes.length}</TitleSection>
+          <br />
+          <br />
 
-      <h2>EPISODES</h2>
-      <hr />
-      {
-        episodes.map((episode) => (
-          <div key={episode.trackId} onClick={() => redirectToEpisode(episode.episodeGuid)}>
-            <h3>{episode.trackName}</h3>
-            <h3>{episode.artistName}</h3>
-            <h3>{episode.releaseDate}</h3>
+          <div>
+            {episodes.map((episode) => (
+              <Link
+                key={episode.trackId}
+                href={`/podcast/${podcastId}/episode/${episode.episodeGuid}`}
+                passHref
+              >
+                <MuiLink underline="none" color="text.primary">
+                  <CardMedium
+                    title={episode.trackName}
+                    image={episode.artworkUrl160}
+                    description={episode.description}
+                    year={getLocaleDate(episode.releaseDate).year}
+                    month={getLocaleDate(episode.releaseDate).month}
+                    duration={
+                      getHoursFromMilliseconds(episode.trackTimeMillis).duration
+                    }
+                  />
+                </MuiLink>
+              </Link>
+            ))}
           </div>
-        ))
-      }
-
+        </PodcastLayout>
+      </Container>
     </BaseLayout>
   );
 };

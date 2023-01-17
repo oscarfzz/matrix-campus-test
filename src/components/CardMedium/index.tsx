@@ -6,7 +6,7 @@ type Props = {
   title: string;
   image?: string;
   description?: string;
-  year?: number;
+  year?: string;
   month?: string;
   duration?: string;
 };
