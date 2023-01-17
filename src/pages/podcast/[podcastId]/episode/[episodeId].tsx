@@ -5,6 +5,7 @@ import { ITunesServices } from "@src/services";
 import { QUERYKEYS, getLocaleDate, getHoursFromMilliseconds } from "@src/utils";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { GetServerSidePropsContext } from "next";
+import { NextSeo } from "next-seo";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
@@ -29,6 +30,10 @@ export const EpisodePage = () => {
 
   return (
     <BaseLayout>
+      <NextSeo
+        title={`${data?.trackName} - iTunes NextJS`}
+        description={`Artist: ${data?.artistName}`}
+      />
       <Container sx={{ pt: 3 }}>
         <PodcastLayout
           information={

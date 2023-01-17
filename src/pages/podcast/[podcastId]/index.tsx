@@ -11,6 +11,7 @@ import { getHoursFromMilliseconds, getLocaleDate, QUERYKEYS } from "@src/utils";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { GetServerSidePropsContext } from "next";
+import { NextSeo } from "next-seo";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -39,6 +40,10 @@ export const PostcastPage = () => {
 
   return (
     <BaseLayout>
+      <NextSeo
+        title={`${podcast?.collectionName} - iTunes NextJS`}
+        description={`Artist: ${podcast?.artistName}`}
+      />
       <Container>
         <PodcastLayout
           information={
@@ -53,7 +58,9 @@ export const PostcastPage = () => {
           }
         >
           <br />
-          <TitleSection variant="h3">TOTAL EPISODES: {episodes.length}</TitleSection>
+          <TitleSection variant="h3">
+            TOTAL EPISODES: {episodes.length}
+          </TitleSection>
           <br />
           <br />
 
