@@ -18,7 +18,9 @@ export default function Home() {
     data = [],
     isLoading,
     error,
-  } = useQuery([QUERYKEYS.TOP], service.getTop100Podcasts);
+  } = useQuery([QUERYKEYS.TOP], service.getTop100Podcasts, {
+    refetchOnWindowFocus: false,
+  });
 
   const getImageProps = (e: IMImage[]) => {
     const lastElement = e[e.length - 1];

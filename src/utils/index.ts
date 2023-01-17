@@ -19,4 +19,5 @@ export const QUERYKEYS = {
   TOP: 'top_100',
   PODCAST: 'podcast',
   EPISODES: 'episodes',
+  EPISODE: 'episode',
 }

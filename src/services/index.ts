@@ -12,6 +12,7 @@ interface IITunesServices {
   getTop100Podcasts(): Promise<IPodcastFromTop100[]>;
   getPodcastById(id: string): Promise<IPodcastDetail>;
   getEpisodesByPodcastId(id: string): Promise<IEpisode[]>;
+  getEpisode(podcastId: string, guid: string): Promise<IEpisode | undefined>;
 }
 
 export class ITunesServices implements IITunesServices {
@@ -30,6 +31,13 @@ export class ITunesServices implements IITunesServices {
   async getEpisodesByPodcastId(id: string): Promise<IEpisode[]> {
     const url = `/lookup?id=${id}&entity=podcastEpisode&limit=15`;
     const response = await axiosInstance.get<IEpisodesResponse>(url);
-    return response.data.results;
+    return response.data.results.slice(1);
   }
+
+  async getEpisode(podcastId: string, guid: string): Promise<IEpisode | undefined> {
+    const url = `/lookup?id=${podcastId}&entity=podcastEpisode&limit=15`;
+    const response = await axiosInstance.get<IEpisodesResponse>(url);
+    return response.data.results.find((episode) => episode.episodeGuid === guid);
+  }
+
 }
