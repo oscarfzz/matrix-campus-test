@@ -3,7 +3,7 @@ import { alpha, createTheme } from "@mui/material/";
 const paletteColors = {
   "primary-color": "#1fdf64",
   "scrollbar-color": "#ffffff4d",
-  "background-default": "#000000",
+  "background-default": "#121212",
   "background-paper": "#181818",
 };
 

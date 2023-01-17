@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from "react";
-import { Container, PodcastCard, TitleSection } from "@src/components";
+import { Container, CardSmall, TitleSection } from "@src/components";
 import { BaseLayout } from "@src/layout";
 import { NextSeo } from "next-seo";
 import { ITunesServices } from "@src/services";
@@ -67,9 +67,9 @@ export default function Home() {
                 passHref
               >
                 <MuiLink underline="none" color="text.primary">
-                  <PodcastCard
+                  <CardSmall
                     title={item["im:name"].label}
-                    artist={item["im:artist"].label}
+                    subtitle={item["im:artist"].label}
                     image={item["im:image"]}
                   />
                 </MuiLink>

@@ -50,7 +50,7 @@ export default function MyApp(props: MyAppProps) {
     },
   }));
 
-  const [routerStatus, setRouterStatus] = React.useState<"loading" | "ready" | 'error'>('loading');
+  const [routerStatus, setRouterStatus] = React.useState<"loading" | "ready" | 'error'>('ready');
 
   const {
     Component: BaseComponent,
