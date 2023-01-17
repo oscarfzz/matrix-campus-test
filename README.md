@@ -1,34 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Itunes NextJS
 
-First, run the development server:
+<a name='introduction'></a>
+Webapp using ITunes REST API with NextJS in order to solve technical test.
 
-```bash
-npm run dev
-# or
-yarn dev
+* [Introduction](#introduction)
+* [Installation](#installation)
+* [Commands](#commands)
+* [Folder Structure](#folder-structure)
+* [Functionalities](#functionalities)
+
+
+<a name='installation'></a>
+## Installation
+This project uses [pnpm](https://pnpm.io/es/) to manage the dependencies, its use is recommended for better compatibility.
+
+<br />
+<hr/>
+
+<a name='commands'></a>
+## Commands
+These are the same basic next js commands or standard
+
+* `pnpm install` - install the dependencies 
+* `pnpm dev` - run the app in development mode
+* `pnpm build` - build the app for production
+* `pnpm start` - run the app in production mode
+* `pnpm lint` - run eslint
+
+<br />
+<hr/>
+
+<a name='folder-structure'></a>
+## Folder Structure
+
+```
+.
+├── next-env.d.ts
+├── next.config.js
+├── package.json
+├── pnpm-lock.yaml
+├── public
+├── src
+ |  ├── components
+ |  ├── context
+ |  ├── hooks
+ |  ├── layout
+ |  ├── pages
+ |  ├── services
+ |  ├── theme
+ |  └── utils
+├── README.md
+└── tsconfig.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<br />
+<hr/>
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<a name='functionalities'></a>
+## Functionalities
+- Each page contains SSR, for better SEO optimization. 
+- All requests are cached on disk for 24 hours.
+- Loader by navigation
+- More other default optimizations such as tree shacking, in images and accessibility

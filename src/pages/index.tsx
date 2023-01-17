@@ -17,11 +17,11 @@ export default function HomePage() {
     <BaseLayout>
       <NextSeo
         title="ITunes NextJS"
-        description="Clon de la página de ITunes con NextJS con el fin de resolver prueba técnica"
+        description="Webapp que usa API REST de ITunes con NextJS con el fin de resolver prueba técnica"
         canonical="https://itunes-nextjs.vercel.app"
         openGraph={{
           url: "https://itunes-nextjs.vercel.app",
-          title: "ITunes NextJS Clone",
+          title: "ITunes NextJS",
           images: [],
           siteName: "itunes-nextjs.vercel.app",
         }}
