@@ -1,3 +1,4 @@
+import { BaseLayout } from "@src/layout";
 import { ITunesServices } from "@src/services";
 import { QUERYKEYS } from "@src/utils";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
@@ -41,10 +42,7 @@ export const Postcast = () => {
   }
 
   return (
-    <div>
-      <h1>Postcast</h1>
-      <hr />
-      <br />
+    <BaseLayout>
       {podcast && (
         <div>
           <h3>{podcast.collectionName}</h3>
@@ -66,7 +64,7 @@ export const Postcast = () => {
         ))
       }
 
-    </div>
+    </BaseLayout>
   );
 };
 

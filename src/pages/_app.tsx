@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AppProps } from "next/app";
 import { ThemeProvider, CssBaseline } from "@mui/material/";
 import createCache from "@emotion/cache";
@@ -42,6 +42,7 @@ interface MyAppProps extends AppProps {
 
 export default function MyApp(props: MyAppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
+  const [routerStatus, setRouterStatus] = React.useState<"loading" | "ready" | 'error'>('loading');
 
   const {
     Component: BaseComponent,
@@ -53,11 +54,36 @@ export default function MyApp(props: MyAppProps) {
   const Component = BaseComponent as unknown as React.FC<typeof pageProps>;
   const { dehydratedState } = pageProps as { dehydratedState: unknown };
 
+  // Router events
+  useEffect(() => {
+    
+    const handleRouteChangeStart = () => {
+      setRouterStatus('loading');
+    };
+    const handleRouteChangeEnd = () => {
+      setRouterStatus('ready');
+    };
+    const handleRouteChangeError = () => {
+      setRouterStatus('error');
+    };
+
+    router.events.on("routeChangeStart", handleRouteChangeStart);
+    router.events.on("routeChangeComplete", handleRouteChangeEnd);
+    router.events.on("routeChangeError", handleRouteChangeError);
+
+    return () => {
+      router.events.on("routeChangeStart", handleRouteChangeStart);
+      router.events.off("routeChangeComplete", handleRouteChangeEnd);
+      router.events.on("routeChangeError", handleRouteChangeError);
+    };
+
+  }, [router])
+
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={dehydratedState}>
         <CacheProvider value={emotionCache}>
-          <AppProvider>
+          <AppProvider routerStatus={routerStatus}>
             <DefaultSeo {...SEOconfig}/>
             <ThemeProvider theme={theme}>
               <CssBaseline />

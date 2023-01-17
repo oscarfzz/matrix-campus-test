@@ -1,40 +1,21 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useCallback } from "react";
-import Image from "next/image";
-import { Box } from "@mui/material";
-import { Container } from "@src/components";
+import React from "react";
+import { Container, PodcastCard, TitleSection } from "@src/components";
 import { BaseLayout } from "@src/layout";
 import { NextSeo } from "next-seo";
 import { ITunesServices } from "@src/services";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
 import { QUERYKEYS } from "@src/utils";
-import { IMImage } from "@src/services/interfaces";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import { Box, Divider, Grid, Link as MuiLink, TextField } from "@mui/material";
 
 export default function Home() {
   const router = useRouter();
   const service = new ITunesServices();
-  const {
-    data = [],
-    isLoading,
-    error,
-  } = useQuery([QUERYKEYS.TOP], service.getTop100Podcasts, {
+  const { data = [] } = useQuery([QUERYKEYS.TOP], service.getTop100Podcasts, {
     refetchOnWindowFocus: false,
   });
-
-  const getImageProps = (e: IMImage[]) => {
-    const lastElement = e[e.length - 1];
-    return {
-      src: lastElement.label,
-      alt: `podcast-image-${lastElement.label}`,
-      height: lastElement.attributes.height,
-      width: lastElement.attributes.height,
-    }
-  };
-
-  const handleOnClick = (id: string) => {
-    router.push(`podcast/${id}`);
-  }
 
   return (
     <BaseLayout>
@@ -54,23 +35,50 @@ export default function Home() {
           cardType: "summary_large_image",
         }}
       />
-      <Box sx={{ width: "100%", height: "100%", overflow: "auto" }}>
-        <br />
-        <br />
-
+      <Box
+        component="section"
+        sx={{ width: "100%", height: "100%", overflow: "auto" }}
+      >
         <Container>
-          <h1>Top 100 Podcasts</h1>
-          <hr />
-          <br />
-          {data.map((item) => (
-            <div key={item.id.attributes["im:id"]} onClick={() => handleOnClick(item.id.attributes["im:id"])}>
-              <Image
-                {...getImageProps(item["im:image"])}
-              />
-              <h2>{item["im:name"].label}</h2>
-              <h3>{item["im:artist"].label}</h3>
-            </div>
-          ))}
+          <Grid container justifyContent="space-between" alignItems="center">
+            <TitleSection variant="h4">Top 100 Podcasts</TitleSection>
+
+            <TextField
+              variant="outlined"
+              size="medium"
+              placeholder="Buscar"
+              sx={{ minWidth: 250 }}
+            />
+          </Grid>
+
+          <Divider variant="fullWidth" sx={{ my: 3, borderColor: 'text.primary' }} />
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+              columnGap: 3,
+              rowGap: 4,
+              width: "100%",
+              pb: 3
+            }}
+          >
+            {data.map((item) => (
+              <Link
+                key={item.id.attributes["im:id"]}
+                href={`podcast/${item.id.attributes["im:id"]}`}
+                passHref
+              >
+                <MuiLink underline="none" color="text.primary">
+                  <PodcastCard
+                    title={item["im:name"].label}
+                    artist={item["im:artist"].label}
+                    image={item["im:image"]}
+                  />
+                </MuiLink>
+              </Link>
+            ))}
+          </Box>
         </Container>
       </Box>
     </BaseLayout>
@@ -80,7 +88,7 @@ export default function Home() {
 export const getServerSideProps = async () => {
   const service = new ITunesServices();
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery([QUERYKEYS.TOP], service.getTop100Podcasts );
+  await queryClient.prefetchQuery([QUERYKEYS.TOP], service.getTop100Podcasts);
 
   return {
     props: {

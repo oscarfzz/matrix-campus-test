@@ -1,3 +1,4 @@
+import { BaseLayout } from "@src/layout";
 import { ITunesServices } from "@src/services";
 import { QUERYKEYS } from "@src/utils";
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
@@ -22,7 +23,7 @@ export const Episode = () => {
     
 
     return (
-        <div>
+        <BaseLayout>
             <h1>Episode</h1>
             <hr />
             <br />
@@ -34,7 +35,7 @@ export const Episode = () => {
                     <h4>{data.primaryGenreName}</h4>
                 </div>
             )}
-        </div>
+        </BaseLayout>
     );
 }
 

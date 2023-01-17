@@ -2,7 +2,6 @@ import { Box, useTheme } from "@mui/material";
 import { ContainerProps } from "./Container.types";
 
 const Container = ({ component, sx, ...props }: ContainerProps) => {
-  const { breakpoints } = useTheme();
 
   return (
     <Box
