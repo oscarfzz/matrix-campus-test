@@ -18,6 +18,7 @@ import { AppProvider } from "../context";
 import { DefaultSeo } from "next-seo";
 import { SEOconfig } from "@src/utils";
 
+
 const isBrowser = typeof document !== "undefined";
 
 function createEmotionCache() {
@@ -41,7 +42,14 @@ interface MyAppProps extends AppProps {
 }
 
 export default function MyApp(props: MyAppProps) {
-  const [queryClient] = React.useState(() => new QueryClient());
+  const [queryClient] = React.useState(() => new QueryClient({
+    defaultOptions: {
+      queries: {
+        cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+      },
+    },
+  }));
+
   const [routerStatus, setRouterStatus] = React.useState<"loading" | "ready" | 'error'>('loading');
 
   const {
