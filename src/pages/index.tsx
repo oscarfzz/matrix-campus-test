@@ -4,18 +4,14 @@ import { Container, PodcastCard, TitleSection } from "@src/components";
 import { BaseLayout } from "@src/layout";
 import { NextSeo } from "next-seo";
 import { ITunesServices } from "@src/services";
-import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query";
+import { dehydrate, QueryClient } from "@tanstack/react-query";
 import { QUERYKEYS } from "@src/utils";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import { Box, Divider, Grid, Link as MuiLink, TextField } from "@mui/material";
+import { useGetTop100Podcast } from "@src/hooks";
 
 export default function Home() {
-  const router = useRouter();
-  const service = new ITunesServices();
-  const { data = [] } = useQuery([QUERYKEYS.TOP], service.getTop100Podcasts, {
-    refetchOnWindowFocus: false,
-  });
+  const { data, setText } = useGetTop100Podcast()
 
   return (
     <BaseLayout>
@@ -48,6 +44,7 @@ export default function Home() {
               size="medium"
               placeholder="Buscar"
               sx={{ minWidth: 250 }}
+              onChange={(e) => setText(e.target.value)}
             />
           </Grid>
 
