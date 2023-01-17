@@ -1,5 +1,6 @@
 import { DefaultSeoProps } from "next-seo";
-import { IMImage } from '@src/services/interfaces';
+import dayjs from "dayjs";
+import { IMImage } from "@src/services/interfaces";
 
 export const SEOconfig: DefaultSeoProps = {
   themeColor: "#8947eb",
@@ -7,7 +8,7 @@ export const SEOconfig: DefaultSeoProps = {
     type: "website",
     locale: "es_ES",
     url: "https://itunes-nextjs.vercel.app/",
-    siteName: "Itunes Next",
+    siteName: "Itunes Nest",
   },
   twitter: {
     handle: "@itunes-nextjs",
@@ -33,3 +34,34 @@ export const getImageProps = (e: IMImage[]) => {
   };
 };
 
+export const getLocaleDate = (_date: string) => {
+    const date = dayjs(_date).locale("es");
+    const month = date.format("MMMM");
+    const year = date.format("YYYY");
+
+    return {
+      month,
+      year,
+    }
+};
+
+export const getHoursFromMilliseconds = (milliseconds: number) => {
+  const hours = Math.floor(milliseconds / (1000 * 60 * 60));
+
+  const minutes = Math.floor(
+    (milliseconds % (1000 * 60 * 60)) / (1000 * 60)
+  );
+
+  const seconds = Math.floor((milliseconds % (1000 * 60)) / 1000);
+
+  const duration = `${hours > 0 ? `${hours} h` : ""} ${
+    minutes > 0 ? `${minutes} min` : ""
+  } ${seconds} s`;
+
+  return {
+    hours,
+    minutes,
+    seconds,
+    duration,
+  };
+}

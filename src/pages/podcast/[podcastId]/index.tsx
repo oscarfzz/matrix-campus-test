@@ -14,15 +14,16 @@ import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-export const Postcast = () => {
+export const PostcastPage = () => {
   const router = useRouter();
   const { podcastId } = router.query;
   const service = new ITunesServices();
 
   const { data: podcast } = useQuery(
-    [QUERYKEYS.PODCAST],
+    [QUERYKEYS.PODCAST, podcastId],
     () => service.getPodcastById(`${podcastId}`),
     {
+      enabled: !!podcastId,
       refetchOnWindowFocus: false,
     }
   );
@@ -84,7 +85,7 @@ export const Postcast = () => {
   );
 };
 
-export default Postcast;
+export default PostcastPage;
 
 export const getServerSideProps = async (
   context: GetServerSidePropsContext

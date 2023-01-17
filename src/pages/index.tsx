@@ -10,7 +10,7 @@ import Link from "next/link";
 import { Box, Divider, Grid, Link as MuiLink, TextField } from "@mui/material";
 import { useGetTop100Podcast } from "@src/hooks";
 
-export default function Home() {
+export default function HomePage() {
   const { data, setText } = useGetTop100Podcast()
 
   return (
