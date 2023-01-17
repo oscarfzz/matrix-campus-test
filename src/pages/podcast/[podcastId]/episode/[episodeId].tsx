@@ -5,3 +5,5 @@ export const Episode = () => {
         </div>
     );
 }
+
+export default Episode;
