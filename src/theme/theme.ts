@@ -1,10 +1,10 @@
 import { alpha, createTheme } from "@mui/material/";
 
 const paletteColors = {
-  "primary-color": "#1fdf64",
+  "primary-color": "#1F487E",
   "scrollbar-color": "#ffffff4d",
-  "background-default": "#121212",
-  "background-paper": "#181818",
+  "background-default": "#FFF",
+  "background-paper": "#FFF",
 };
 
 export const theme = createTheme({
@@ -56,7 +56,7 @@ export const theme = createTheme({
       paper: paletteColors["background-paper"],
     },
     text: {
-      primary: "#ffffff",
+      primary: "#000",
       secondary: "#a7a7a7",
     }
   },

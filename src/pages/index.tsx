@@ -53,7 +53,7 @@ export default function HomePage() {
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
               columnGap: 3,
               rowGap: 4,
               width: "100%",

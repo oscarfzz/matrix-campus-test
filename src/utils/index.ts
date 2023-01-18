@@ -42,6 +42,7 @@ export const getLocaleDate = (_date: string) => {
     return {
       month,
       year,
+      fullDate: date.format("DD/MM/YYYY"),
     }
 };
 

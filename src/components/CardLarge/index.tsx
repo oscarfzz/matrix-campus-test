@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, Divider, SxProps, Theme } from "@mui/material";
 import Image from "next/image";
 
 type Props = {
@@ -7,15 +7,37 @@ type Props = {
   subtitle: string;
   description?: string;
   image: string;
+  sx?: SxProps<Theme>;
 };
 
-export const CardLarge = ({ title, subtitle, description, image }: Props) => {
+export const CardLarge = ({ title, subtitle, description, image, sx }: Props) => {
   return (
-    <Grid container columnGap={2.5} flexWrap="nowrap">
-      <Grid item>
-        <Box sx={{ borderRadius: 5, overflow: "hidden", display: "flex" }}>
+    <Grid
+      container
+      direction="column"
+      flexWrap="nowrap"
+      rowGap={3}
+      sx={{
+        py: 2,
+        px: 1,
+        boxShadow: 1,
+        borderRadius: 1,
+        bgcolor: "background.paper",
+        
+        ...sx,
+      }}
+    >
+      <Grid container justifyContent="center">
+        <Box
+          sx={{
+            borderRadius: 3,
+            overflow: "hidden",
+            display: "flex",
+            width: "auto",
+          }}
+        >
           <Image
-            src={image}
+            src={image || ''}
             alt={title}
             width={232}
             height={232}
@@ -25,44 +47,43 @@ export const CardLarge = ({ title, subtitle, description, image }: Props) => {
         </Box>
       </Grid>
 
-      <Grid item xs>
-        <Grid
-          container
-          direction="column"
-          justifyContent="flex-end"
-          height="100%"
-          rowGap={1.25}
+      <Divider variant="fullWidth" sx={{ borderColor: "text.secondary" }} />
+
+      <Grid
+        item
+        xs
+        sx={{
+          px: 2,
+        }}
+      >
+        <Typography
+          component="h1"
+          variant="h4"
+          color="text.primary"
+          fontWeight={700}
+          mb={1}
         >
-          <Grid item>
-            <Typography
-              component="h1"
-              variant="h1"
-              color="text.primary"
-              fontWeight={700}
-              my={1.25}
-            >
-              {title}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              component="h2"
-              variant="h2"
-              color="text.primary"
-              fontWeight={600}
-            >
-              {subtitle}
-            </Typography>
-          </Grid>
-          {description && (
-            <Grid item>
-              <Typography component="p" variant="h5" color="text.secondary">
-                {description}
-              </Typography>
-            </Grid>
-          )}
-        </Grid>
+          {title}
+        </Typography>
+
+        <Typography component="h2" variant="h5" color="text.secondary">
+          by {subtitle}
+        </Typography>
       </Grid>
+
+      <Divider variant="fullWidth" sx={{ borderColor: "text.secondary" }} />
+
+      {description && (
+        <Grid item xs sx={{ px: 1 }}>
+          <Typography component="p" variant="h5" mb={2}>
+            Description:
+          </Typography>
+
+          <Typography component="p" variant="h5" color="text.secondary">
+            {description}
+          </Typography>
+        </Grid>
+      )}
     </Grid>
   );
 };

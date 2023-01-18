@@ -19,68 +19,103 @@ export const CardSmall = React.forwardRef<HTMLDivElement, Props>(
         container
         direction="column"
         ref={ref}
-        rowGap={1.75}
-        justifyContent="space-between"
+        justifyContent="center"
         sx={{
-          backgroundColor: "background.paper",
-          boxShadow: 1,
-          pt: 3,
-          pb: 2,
-          px: 2,
-          borderRadius: 2,
-          height: "100%",
-
-          "&:hover": {
-            backgroundColor: "#282828",
-            boxShadow: 3,
-          },
+          minHeight: 200,
         }}
       >
-        <Grid container justifyContent="center">
-          <Image
-            {...getImageProps(image)}
-            objectFit="contain"
-            objectPosition="center"
-            style={{
-              aspectRatio: "1/1",
-            }}
-          />
-        </Grid>
-
-        <Grid item xs flexGrow={1}>
-          <Typography
-            component="h2"
-            variant="h5"
-            fontWeight={600}
-            color="text.primary"
+        <Grid
+          container
+          justifyContent="center"
+          sx={{
+            position: "relative",
+            width: "100%",
+            height: 85,
+          }}
+        >
+          <Box
             sx={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
+              position: "absolute",
+              bottom: -90,
             }}
           >
-            {title}
-          </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                borderRadius: "100%",
+                overflow: "hidden",
+              }}
+            >
+              <Image
+                {...getImageProps(image)}
+                objectFit="contain"
+                objectPosition="center"
+                style={{
+                  aspectRatio: "1/1",
+                }}
+              />
+            </Box>
+          </Box>
         </Grid>
 
-        <Grid item xs flexGrow={1}>
-          <Typography
-            component="h3"
-            variant="h6"
-            fontWeight={500}
-            color="text.secondary"
+        <Grid
+          container
+          direction="column"
+          justifyContent="flex-end"
+          flexGrow={1}
+          sx={{
+            height: 200,
+            boxShadow: 1,
+            borderRadius: 3,
+
+            "&:hover": {
+              boxShadow: 3,
+            },
+          }}
+        >
+          <Grid
+            container
+            direction="column"
+            justifyContent="space-between"
             sx={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
+              height: 100,
+              p: 2,
             }}
           >
-            {subtitle}
-          </Typography>
+            <Typography
+              component="h2"
+              variant="h5"
+              fontWeight={600}
+              color="text.primary"
+              textAlign="center"
+              sx={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+              }}
+            >
+              {title}
+            </Typography>
+
+            <Typography
+              component="h3"
+              variant="h6"
+              fontWeight={500}
+              textAlign="center"
+              color="text.secondary"
+              sx={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+              }}
+            >
+              {subtitle}
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
     );

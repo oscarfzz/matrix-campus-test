@@ -8,14 +8,21 @@ type Props = {
 
 export const PodcastLayout = ({ information, children }: Props) => {
   return (
-    <>
+    <Box
+      sx={{
+        display: "grid",
+        gridTemplateColumns: "400px 1fr",
+        columnGap: 8,
+        width: "100%",
+        height: "100%",
+      }}
+    >
       <Box
         sx={{
-          position: "sticky",
-          top: 64,
           pb: 3,
-          zIndex: 1,
           backgroundColor: "background.default",
+          width: 300,
+          mx: 'auto',
         }}
       >
         {information}
@@ -24,11 +31,11 @@ export const PodcastLayout = ({ information, children }: Props) => {
       <Box
         sx={{
           width: "100%",
-          pb: 3
+          pb: 3,
         }}
       >
         {children}
       </Box>
-    </>
+    </Box>
   );
 };
